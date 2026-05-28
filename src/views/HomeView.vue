@@ -29,7 +29,7 @@ function updateTotal(key: string) {
 function handleKeyDown(event: KeyboardEvent) {
   const button = document.getElementById('calculator-key-' + event.key)
   if (!button) return
-  button.focus()
+  button.focus({ focusVisible: false })
   button.click()
 }
 
@@ -49,7 +49,7 @@ function handleKeyDown(event: KeyboardEvent) {
       <div class="col-4 mb-3" v-for="key in keys" :key="'calculator-key-' + key">
         <button @click="updateTotal(key)" :id="'calculator-key-' + key" class="w-100 glass display-2" type="button"
           :title="key">
-          {{ key }}
+          <span>{{ key == 'Backspace' ? '⌫' : key }}</span>
         </button>
       </div>
     </div>
@@ -59,18 +59,18 @@ function handleKeyDown(event: KeyboardEvent) {
 
 <style scoped lang="scss">
 .glass {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.28);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5.3px);
-  -webkit-backdrop-filter: blur(5.3px);
+  backdrop-filter: blur(8.3px);
+  -webkit-backdrop-filter: blur(8.3px);
   border: 1px solid rgba(255, 255, 255, 0.62);
   text-shadow: 1px 1px 5px rgb(245, 203, 210);
   transition: all 200ms ease-in-out;
 }
 
 .glass:focus {
-  background: rgba(255, 255, 255, 0.27);
+  background: rgba(255, 255, 255, 0.35);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(9.7px);
