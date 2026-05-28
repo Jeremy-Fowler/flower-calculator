@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { BackgroundImage } from '@/models/background-image.js';
-import { computed } from 'vue';
+import { reactive } from 'vue';
 
 const backgroundImages: BackgroundImage[][] = [
   // January
@@ -12,7 +12,7 @@ const backgroundImages: BackgroundImage[][] = [
   // April
   [new BackgroundImage('')],
   // May
-  [new BackgroundImage('https://images.unsplash.com/photo-1561848355-890d054dc55a')],
+  [new BackgroundImage('1561848355-890d054dc55a', '1652217992125-f4610ffaba3c')],
   // June
   [new BackgroundImage('')],
   // July
@@ -29,7 +29,7 @@ const backgroundImages: BackgroundImage[][] = [
   [new BackgroundImage('')],
 ]
 
-const backgroundImageForCurrentMonth = computed(() => {
+function getBackgroundImageForCurrentMonth() {
   const imagesForCurrentMonth = backgroundImages[new Date().getMonth()]
 
   if (!imagesForCurrentMonth) throw new Error("No month found!")
@@ -39,7 +39,10 @@ const backgroundImageForCurrentMonth = computed(() => {
   if (!randomImage) throw new Error("No image found!")
 
   return randomImage
-})
+}
+
+const backgroundImage = reactive(getBackgroundImageForCurrentMonth())
+
 </script>
 
 <template>
@@ -52,8 +55,14 @@ const backgroundImageForCurrentMonth = computed(() => {
 
 <style scoped lang="scss">
 main {
-  background-image: v-bind('backgroundImageForCurrentMonth.portrait');
-  min-height: 100dvh;
+  background-image: v-bind('backgroundImage.portrait');
   background-size: cover;
+  background-position: center;
+}
+
+@media (min-width: 992px) {
+  main {
+    background-image: v-bind('backgroundImage.landscape');
+  }
 }
 </style>

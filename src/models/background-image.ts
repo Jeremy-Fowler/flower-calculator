@@ -1,20 +1,15 @@
 export class BackgroundImage {
-  private _portrait: string
-  private _landscape: string
-  constructor(portrait: string, landscape: string = portrait) {
-    this._portrait = portrait
-    this._landscape = landscape
+  private _portraitID: string
+  private _landscapeID: string
+  constructor(portraitID: string, landscapeID: string = portraitID) {
+    this._portraitID = portraitID
+    this._landscapeID = landscapeID
   }
   get portrait() {
-    return `url(${this._portrait})`
+    return `url(https://images.unsplash.com/photo-${this._portraitID}),url(https://images.unsplash.com/photo-${this._portraitID}?q=50&w=540)`
   }
   get landscape() {
-    return `url(${this._landscape})`
+    return `url(https://images.unsplash.com/photo-${this._landscapeID}),url(https://images.unsplash.com/photo-${this._landscapeID}?q=50&w=540)`
   }
-  get lowQualityPortrait() {
-    return `url(${this._portrait}?q=50&w=540)`
-  }
-  get lowQualityLandscape() {
-    return `url(${this._landscape}?q=50&w=540)`
-  }
+
 }
