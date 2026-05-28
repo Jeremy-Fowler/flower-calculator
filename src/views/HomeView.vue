@@ -44,7 +44,7 @@ function handleKeyDown(event: KeyboardEvent) {
     <div class="row">
       <div class="col-12 my-3">
         <div class="text-center">
-          <b>Price per stem</b>
+          <b class="label">Price per stem</b>
         </div>
         <div class="glass text-center display-2 py-2">
           <span class="blinking-cursor">${{ displayPrice }}</span>
@@ -62,13 +62,16 @@ function handleKeyDown(event: KeyboardEvent) {
     <div class="row">
       <div class="col-12 mb-3">
         <div class="text-center">
-          <b>Quantity</b>
+          <b class="label">Quantity</b>
         </div>
         <div class="d-flex justify-content-between align-items-center">
-          <button @click="quantity--" id="calculator-key--" class="glass fs-1 fw-bold quantity"
+          <button @click="quantity--" id="calculator-key--" class="glass fs-1 fw-bold quantity-button"
             title="Decrease quantity" type="button" :disabled="quantity == 1">-</button>
-          <span class="fs-1 glass py-2 px-4">{{ quantity }}</span>
-          <button @click="quantity++" id="calculator-key-+" class="glass fs-1 fw-bold quantity"
+          <div class="glass py-2 px-4 d-flex flex-column gap-1 align-items-center quantity">
+            <span class="fs-1">{{ quantity }}</span>
+            <span>{{ quantity == 1 ? 'Stem' : 'Stems' }}</span>
+          </div>
+          <button @click="quantity++" id="calculator-key-+" class="glass fs-1 fw-bold quantity-button"
             title="Increase quantity" type="button">+</button>
         </div>
       </div>
@@ -102,11 +105,8 @@ function handleKeyDown(event: KeyboardEvent) {
 
 .glass:focus {
   background: rgba(255, 255, 255, 0.35);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(9.7px);
   -webkit-backdrop-filter: blur(9.7px);
-  text-shadow: 1px 1px 5px rgb(245, 203, 210);
   border: 1px solid rgba(255, 255, 255, 1);
 }
 
@@ -116,10 +116,22 @@ function handleKeyDown(event: KeyboardEvent) {
   animation: blink 1s step-end infinite;
 }
 
-.quantity {
+.quantity-button {
   min-width: 70px;
   aspect-ratio: 1/1;
   border-radius: 50%;
+}
+
+.quantity-button:focus {
+  border-radius: 50%;
+}
+
+.quantity {
+  min-width: 110px;
+}
+
+.label {
+  text-shadow: 1px 1px 3px rgb(252, 227, 227);
 }
 
 
