@@ -9,7 +9,9 @@ const keys = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.', 'Backspace'
 
 const displayPrice = ref('')
 
-const price = computed(() => parseFloat(displayPrice.value))
+const quantity = ref(1)
+
+const price = computed(() => parseFloat(displayPrice.value) || 0)
 
 function updateTotal(key: string) {
   if (!keys.includes(key)) return
@@ -27,6 +29,7 @@ function updateTotal(key: string) {
 }
 
 function handleKeyDown(event: KeyboardEvent) {
+  console.log(event)
   const button = document.getElementById('calculator-key-' + event.key)
   if (!button) return
   button.focus({ focusVisible: false })
@@ -40,6 +43,9 @@ function handleKeyDown(event: KeyboardEvent) {
   <div class="container">
     <div class="row">
       <div class="col-12 my-3">
+        <div class="text-center">
+          <b>Price per stem</b>
+        </div>
         <div class="glass text-center display-2 py-2">
           <span class="blinking-cursor">${{ displayPrice }}</span>
         </div>
@@ -47,10 +53,35 @@ function handleKeyDown(event: KeyboardEvent) {
     </div>
     <div class="row">
       <div class="col-4 mb-3" v-for="key in keys" :key="'calculator-key-' + key">
-        <button @click="updateTotal(key)" :id="'calculator-key-' + key" class="w-100 glass display-2" type="button"
-          :title="key">
+        <button @click="updateTotal(key)" :id="'calculator-key-' + key" class="w-100 glass fs-1 py-2 fw-bold"
+          type="button" :title="key">
           <span>{{ key == 'Backspace' ? '⌫' : key }}</span>
         </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mb-3">
+        <div class="text-center">
+          <b>Quantity</b>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <button @click="quantity--" id="calculator-key--" class="glass fs-1 fw-bold quantity"
+            title="Decrease quantity" type="button" :disabled="quantity == 1">-</button>
+          <span class="fs-1 glass py-2 px-4">{{ quantity }}</span>
+          <button @click="quantity++" id="calculator-key-+" class="glass fs-1 fw-bold quantity"
+            title="Increase quantity" type="button">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="glass p-2 d-flex justify-content-between align-items-center">
+          <div class="d-flex flex-column gap-1">
+            <b>Subtotal</b>
+            <span>{{ quantity }} * ${{ price.toFixed(2) }}</span>
+          </div>
+          <div class="display-3">${{ (price * quantity).toFixed(2) }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -75,6 +106,7 @@ function handleKeyDown(event: KeyboardEvent) {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(9.7px);
   -webkit-backdrop-filter: blur(9.7px);
+  text-shadow: 1px 1px 5px rgb(245, 203, 210);
   border: 1px solid rgba(255, 255, 255, 1);
 }
 
@@ -83,6 +115,13 @@ function handleKeyDown(event: KeyboardEvent) {
   margin-left: 5px;
   animation: blink 1s step-end infinite;
 }
+
+.quantity {
+  min-width: 70px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+
 
 @keyframes blink {
 
