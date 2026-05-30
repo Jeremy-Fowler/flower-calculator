@@ -29,7 +29,6 @@ function updateTotal(key: string) {
 }
 
 function handleKeyDown(event: KeyboardEvent) {
-  console.log(event)
   const button = document.getElementById('calculator-key-' + event.key)
   if (!button) return
   button.focus({ focusVisible: false })
@@ -77,7 +76,7 @@ function handleKeyDown(event: KeyboardEvent) {
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-6 mb-3">
         <div class="glass p-2 d-flex justify-content-between align-items-center">
           <div class="d-flex flex-column gap-1">
             <b>Subtotal</b>
@@ -85,6 +84,9 @@ function handleKeyDown(event: KeyboardEvent) {
           </div>
           <div class="display-3">${{ (price * quantity).toFixed(2) }}</div>
         </div>
+      </div>
+      <div class="col-lg-6">
+        <button type="button" class="glass p-2 w-100 display-3">↵ Add</button>
       </div>
     </div>
   </div>

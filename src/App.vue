@@ -26,7 +26,7 @@ const backgroundImages: BackgroundImage[][] = [
   // November
   [new BackgroundImage('')],
   // December
-  [new BackgroundImage('')],
+  [new BackgroundImage('')]
 ]
 
 function getBackgroundImageForCurrentMonth() {
@@ -41,7 +41,7 @@ function getBackgroundImageForCurrentMonth() {
   return randomImage
 }
 
-const backgroundImage = reactive(getBackgroundImageForCurrentMonth())
+const backgroundImage = reactive(getBackgroundImageForCurrentMonth() ?? new BackgroundImage('1561848355-890d054dc55a', '1652217992125-f4610ffaba3c'))
 
 </script>
 
