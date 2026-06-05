@@ -14,8 +14,6 @@ const quantity = ref(1)
 const price = computed(() => parseFloat(displayPrice.value) || 0)
 
 function updateTotal(key: string) {
-  if (!keys.includes(key)) return
-
   switch (key) {
     case 'Backspace':
       if (displayPrice.value.length == 0) return
