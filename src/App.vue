@@ -91,7 +91,7 @@ function getBackgroundImageForCurrentMonth(month: number = new Date().getMonth()
   return randomImage!
 }
 
-const backgroundImage = reactive(getBackgroundImageForCurrentMonth(11))
+const backgroundImage = reactive(getBackgroundImageForCurrentMonth())
 
 </script>
 
