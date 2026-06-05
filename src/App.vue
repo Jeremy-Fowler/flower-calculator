@@ -2,6 +2,8 @@
 import { BackgroundImage } from '@/models/background-image.js';
 import { reactive } from 'vue';
 
+type Month = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
+
 const backgroundImages: BackgroundImage[][] = [
   // January 0
   [
@@ -82,7 +84,8 @@ const backgroundImages: BackgroundImage[][] = [
   ]
 ]
 
-function getBackgroundImageForCurrentMonth(month: number = new Date().getMonth()) {
+function getBackgroundImageForCurrentMonth(month: Month = new Date().getMonth() as Month) {
+  if (month < 0 || month > 11) throw new Error('Month must be between 0 and 11')
 
   const imagesForCurrentMonth = backgroundImages[month]
 
