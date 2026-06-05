@@ -85,8 +85,6 @@ const backgroundImages: BackgroundImage[][] = [
 ]
 
 function getBackgroundImageForCurrentMonth(month: Month = new Date().getMonth() as Month) {
-  if (month < 0 || month > 11) throw new Error('Month must be between 0 and 11')
-
   const imagesForCurrentMonth = backgroundImages[month]
 
   const randomImage = imagesForCurrentMonth![Math.floor(Math.random() * imagesForCurrentMonth!.length)]
