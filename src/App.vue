@@ -85,9 +85,9 @@ const backgroundImages: BackgroundImage[][] = [
 ]
 
 function getBackgroundImageForCurrentMonth(month: Month = new Date().getMonth() as Month) {
-  const imagesForCurrentMonth = backgroundImages[month]
+  const imagesForCurrentMonth = backgroundImages[month]!
 
-  const randomImage = imagesForCurrentMonth![Math.floor(Math.random() * imagesForCurrentMonth!.length)]
+  const randomImage = imagesForCurrentMonth[Math.floor(Math.random() * imagesForCurrentMonth.length)]
 
   return randomImage!
 }

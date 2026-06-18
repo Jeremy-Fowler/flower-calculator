@@ -6,10 +6,14 @@ export class BackgroundImage {
     this._landscapeID = landscapeID
   }
   get portrait() {
-    return `url(https://images.unsplash.com/photo-${this._portraitID}), url(https://images.unsplash.com/photo-${this._portraitID}?q=25&w=540)`
+    return this._generateURLs(this._portraitID)
   }
   get landscape() {
-    return `url(https://images.unsplash.com/photo-${this._landscapeID}), url(https://images.unsplash.com/photo-${this._landscapeID}?q=25&w=540)`
+    return this._generateURLs(this._landscapeID)
+  }
+
+  private _generateURLs(id: string) {
+    return `url(https://images.unsplash.com/photo-${id}), url(https://images.unsplash.com/photo-${id}?q=25&w=540), url(https://images.unsplash.com/photo-${id}?q=5&w=100)`
   }
 
 }
