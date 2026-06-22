@@ -1,7 +1,19 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useFlowerStore } from '@/stores/flower.ts';
+import { computed, onMounted, onUnmounted, ref, useTemplateRef } from 'vue';
 
-onMounted(() => { addEventListener('keydown', handleKeyDown) })
+onMounted(() => {
+  addEventListener('keydown', handleKeyDown)
+  if (!flowerListInput.value) return
+  flowerListInput.value.addEventListener('focus', () => {
+    removeEventListener('keydown', handleKeyDown)
+    listIsFocused.value = true
+  })
+  flowerListInput.value.addEventListener('blur', () => {
+    addEventListener('keydown', handleKeyDown)
+    listIsFocused.value = false
+  })
+})
 
 onUnmounted(() => { removeEventListener('keydown', handleKeyDown) })
 
@@ -12,6 +24,14 @@ const displayPrice = ref('')
 const quantity = ref(1)
 
 const price = computed(() => parseFloat(displayPrice.value) || 0)
+
+const flowerListInput = useTemplateRef('flower-list-input')
+
+const listIsFocused = ref(false)
+
+const flowerStore = useFlowerStore()
+
+const flowerName = ref('')
 
 function updateTotal(key: string) {
   switch (key) {
@@ -39,12 +59,24 @@ function handleKeyDown(event: KeyboardEvent) {
 <template>
   <div class="container">
     <div class="row">
+      <div class="col-12">
+        <form>
+          <label for="flower-list-input" class="form-label">Flowers</label>
+          <input class="form-control" list="flower-list-options" id="flower-list-input" placeholder="Type to search..."
+            ref="flower-list-input" v-model="flowerName">
+          <datalist id="flower-list-options">
+            <option v-for="flower in flowerStore.flowers" :value="flower" :key="flower + '-option'"></option>
+          </datalist>
+        </form>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-12 my-3">
         <div class="text-center">
           <b class="label">Price per stem</b>
         </div>
         <div class="glass text-center display-2 py-2">
-          <span class="blinking-cursor">${{ displayPrice }}</span>
+          <span :class="{ 'blinking-cursor': !listIsFocused }">${{ displayPrice }}</span>
         </div>
       </div>
     </div>
