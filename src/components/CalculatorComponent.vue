@@ -7,11 +7,9 @@ onMounted(() => {
   if (!flowerListInput.value) return
   flowerListInput.value.addEventListener('focus', () => {
     removeEventListener('keydown', handleKeyDown)
-    listIsFocused.value = true
   })
   flowerListInput.value.addEventListener('blur', () => {
     addEventListener('keydown', handleKeyDown)
-    listIsFocused.value = false
   })
 })
 
@@ -63,7 +61,7 @@ function handleKeyDown(event: KeyboardEvent) {
         <form>
           <label for="flower-list-input" class="form-label">Flowers</label>
           <input class="form-control" list="flower-list-options" id="flower-list-input" placeholder="Type to search..."
-            ref="flower-list-input" v-model="flowerName">
+            ref="flower-list-input" v-model="flowerName" @focus="listIsFocused = true" @blur="listIsFocused = false">
           <datalist id="flower-list-options">
             <option v-for="flower in flowerStore.flowers" :value="flower" :key="flower + '-option'"></option>
           </datalist>
